@@ -321,6 +321,7 @@ data:
   "fake-attach": "true"
   "async-query-volume": "false"
   "improved-csi-idempotency": "false"
+  "use-service-for-placement-engine": "false"
 kind: ConfigMap
 metadata:
   name: csi-feature-states
