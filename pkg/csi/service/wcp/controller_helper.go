@@ -181,10 +181,12 @@ func validateWCPControllerExpandVolumeRequest(ctx context.Context, req *csi.Cont
 // getK8sCloudOperatorClientConnection is a helper function that creates a clientConnection to
 // k8sCloudOperator GRPC service running on syncer container
 func getK8sCloudOperatorClientConnection(ctx context.Context) (*grpc.ClientConn, error) {
+	log := logger.GetLogger(ctx)
 	var opts []grpc.DialOption
 	opts = append(opts, grpc.WithInsecure())
 	ip, port := GetK8sCloudOperatorServicePortForClient(ctx)
-	k8sCloudOperatorServiceAddr := ip + strconv.Itoa(port)
+	k8sCloudOperatorServiceAddr := ip + ":" + strconv.Itoa(port)
+	log.Infof("connecting to k8sCloudOperatorServiceAddr %s", k8sCloudOperatorServiceAddr)
 	// Connect to k8s cloud operator gRPC service
 	conn, err := grpc.Dial(k8sCloudOperatorServiceAddr, opts...)
 	if err != nil {
